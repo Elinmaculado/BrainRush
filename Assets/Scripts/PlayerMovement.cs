@@ -8,12 +8,15 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     public float moveSpeed = 5f;
 
+    public Transform groundCheck;
+    
     [SerializeField] private int positionIndex;
     [SerializeField] private InputAction moveLeft, moveRight, jump;
     private Rigidbody rb;
 
     private Vector3 newPos;
     private bool isMoving = false;
+    public bool canJump = false;
 
     private void OnEnable()
     {
@@ -23,6 +26,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        moveLeft.Disable();
+        moveRight.Disable();
+        jump.Disable();
+    }
+
+    private void OnDestroy()
     {
         moveLeft.Disable();
         moveRight.Disable();
@@ -41,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleInput();
         MovePlayer();
+        canJump = IsGrounded();
     }
 
     public void MovePlayer()
@@ -75,10 +86,17 @@ public class PlayerMovement : MonoBehaviour
             isMoving = true;
         }
 
-        if (jump.triggered)
+        if (jump.triggered && canJump)
         {
-            // Falta raycast para canJump
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
+    }
+    
+    private bool IsGrounded()
+    {
+        float raycastDistance = 1.1f;
+        LayerMask groundLayer = LayerMask.GetMask("Ground");
+        // Debug.DrawRay(transform.position, Vector3.down * raycastDistance, Color.red);
+        return Physics.Raycast(transform.position, Vector3.down, raycastDistance, groundLayer);
     }
 }
