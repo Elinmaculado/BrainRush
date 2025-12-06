@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class PlayerCollisionHandling : MonoBehaviour
 {
     public Image progressBar;
-    public float recoveryRate = 0.03f;
+    public float recoveryRate;
+    public float growthHit;
     
     private void Start()
     {
@@ -12,12 +13,13 @@ public class PlayerCollisionHandling : MonoBehaviour
     }
     private void Update()
     {
+        if (progressBar.fillAmount >= 1) return;
         progressBar.fillAmount -= recoveryRate * Time.deltaTime;
     }
 
     public void WhenHit()
     {
-        progressBar.fillAmount += 0.5f;
+        progressBar.fillAmount += growthHit;
         Debug.Log("Ouch");
     }
 

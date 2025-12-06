@@ -7,8 +7,6 @@ public class PlayerMovement : MonoBehaviour
     public Transform[] positions = new Transform[3];
     public float jumpHeight = 3f;
     public float moveSpeed = 5f;
-
-    public Transform groundCheck;
     
     [SerializeField] private int positionIndex;
     [SerializeField] private InputAction moveLeft, moveRight, jump;
@@ -18,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving = false;
     public bool canJump = false;
 
+    #region InputShit
     private void OnEnable()
     {
         moveLeft.Enable();
@@ -38,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         moveRight.Disable();
         jump.Disable();
     }
+    #endregion
 
     void Start()
     {
@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         canJump = IsGrounded();
     }
+
 
     public void MovePlayer()
     {
