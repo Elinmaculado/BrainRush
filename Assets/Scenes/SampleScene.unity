@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionHandling
   progressBar: {fileID: 635722864}
   recoveryRate: 0.01
-  growthHit: 0.05
+  growthHit: 0.1
 --- !u!1 &1063225213
 GameObject:
   m_ObjectHideFlags: 0
