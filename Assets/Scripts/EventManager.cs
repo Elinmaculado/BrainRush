@@ -9,6 +9,7 @@ public class EventManager : MonoBehaviour
 
     [Header("Obstacles")]
     public float obstacleSpeed;
+    public ObstacleSpawner spawner;
     
     [Header("Weeds")]
     public GameObject[] weeds = new GameObject[4];
@@ -35,6 +36,7 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
+        spawner = FindObjectOfType<ObstacleSpawner>();
         audioSource.Play();
         audioSource.Stop();
     }
@@ -44,7 +46,9 @@ public class EventManager : MonoBehaviour
         RotateCamera();
         if (progressBar.fillAmount >= 0.2f && !isInvisible) Invisible();
         if (progressBar.fillAmount >= 0.1 && !areWeedsActive) ActivateWeeds();
-        if (progressBar.fillAmount >= 0.7f) isRotating = true;
+        if (progressBar.fillAmount >= 0.5f) obstacleSpeed = 15;
+        if (progressBar.fillAmount >= 0.6f) ChangeSpawnSpeed();
+        if (progressBar.fillAmount >= 0.8f) isRotating = true;
         if (progressBar.fillAmount >= 1f) GameOver();
     }
 
@@ -72,6 +76,12 @@ public class EventManager : MonoBehaviour
     private void GameOver()
     {
         KojimaSan.SetActive(true);
+        spawner.isPlaying = false;
         //gameOverButton.SetActive(true);
+    }
+
+    private void ChangeSpawnSpeed()
+    {
+        spawner.easyMode = false;
     }
 }

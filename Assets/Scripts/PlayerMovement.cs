@@ -8,13 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     public float moveSpeed = 5f;
     
-    [SerializeField] private int positionIndex;
     [SerializeField] private InputAction moveLeft, moveRight, jump;
+    private int positionIndex;
     private Rigidbody rb;
 
     private Vector3 newPos;
     private bool isMoving = false;
-    public bool canJump = false;
+    private bool canJump = false;
 
     #region InputShit
     private void OnEnable()
