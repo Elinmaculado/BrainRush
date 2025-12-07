@@ -10,11 +10,14 @@ public class EventManager : MonoBehaviour
     [Header("Obstacles")]
     public float obstacleSpeed;
     
+    [Header("Weeds")]
+    public GameObject[] weeds = new GameObject[4];
+    public bool areWeedsActive = false;
+    
     [Header("Player")]
     public GameObject mainBody;
     public GameObject Invisi1;
     public GameObject Invisi2;
-    public GameObject KojimaSan;
     public AudioSource audioSource;
     public bool isInvisible = false;
     
@@ -22,6 +25,11 @@ public class EventManager : MonoBehaviour
     public GameObject camera;
     public float rotationSpeed;
     public bool isRotating = false;
+    
+    [Header("Game Over")]
+    public GameObject KojimaSan;
+    //public GameObject gameOverButton;
+    
 
     // Update is called once per frame
 
@@ -34,8 +42,10 @@ public class EventManager : MonoBehaviour
     void Update()
     {
         RotateCamera();
-        if (progressBar.fillAmount >= 0.1f) isRotating = true;
         if (progressBar.fillAmount >= 0.2f && !isInvisible) Invisible();
+        if (progressBar.fillAmount >= 0.1 && !areWeedsActive) ActivateWeeds();
+        if (progressBar.fillAmount >= 0.7f) isRotating = true;
+        if (progressBar.fillAmount >= 1f) GameOver();
     }
 
     private void RotateCamera()
@@ -50,7 +60,18 @@ public class EventManager : MonoBehaviour
         mainBody.SetActive(false);
         Invisi1.SetActive(true);
         Invisi2.SetActive(true);
-        KojimaSan.SetActive(true);
         audioSource.Play();
+    }
+    
+    private void ActivateWeeds()
+    {
+        areWeedsActive = true;
+        foreach (var weed in weeds) weed.SetActive(true);
+    }
+
+    private void GameOver()
+    {
+        KojimaSan.SetActive(true);
+        //gameOverButton.SetActive(true);
     }
 }
