@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    public float speed;
+    private float speed;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        speed = FindAnyObjectByType<EventManager>().obstacleSpeed;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -16,13 +21,10 @@ public class ObstacleMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerCollisionHandling>().WhenHit();
-            Debug.Log("Player Hit");
             Destroy(gameObject);
         }
-        else if (other.gameObject.CompareTag("Limit"))
-        {
-            Debug.Log("Limit Hit");
+        else 
             Destroy(gameObject);
-        }
+        
     }
 }

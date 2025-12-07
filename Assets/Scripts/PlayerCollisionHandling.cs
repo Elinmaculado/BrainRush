@@ -20,7 +20,6 @@ public class PlayerCollisionHandling : MonoBehaviour
     public void WhenHit()
     {
         progressBar.fillAmount += growthHit;
-        Debug.Log("Ouch");
     }
 
 }
